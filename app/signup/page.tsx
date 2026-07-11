@@ -11,14 +11,33 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { authClient } from "@/lib/auth-client";
+import { redirect } from "next/navigation";
 
 export default function SignupPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleClick = () => {
-    // TODO: hook up BetterAuth sign-up here
+  const handleClick = async() => {
+    const { data, error } = await authClient.signUp.email({
+        email, // user email address
+        password, // user password -> min 8 characters by default
+        name, // user display name
+        callbackURL: "/dashboard" // A URL to redirect to after the user verifies their email (optional)
+    }, {
+        onRequest: (ctx) => {
+            //show loading
+        },
+        onSuccess: (ctx) => {
+            //redirect to the dashboard or sign in page
+            redirect('/dashboard')
+        },
+        onError: (ctx) => {
+            // display the error message
+            alert(ctx.error.message);
+        },
+});
   };
 
   return (
