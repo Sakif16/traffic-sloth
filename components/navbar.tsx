@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import LogoutButton from "./logoutButton";
 
 export default function Navbar() {
   return (
@@ -14,6 +15,7 @@ export default function Navbar() {
         <Link href="/signup">
           <Button>Sign up</Button>
         </Link>
+        <LogoutButton/>
       </div>
     </nav>
   );
